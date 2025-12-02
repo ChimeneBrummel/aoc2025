@@ -1,4 +1,4 @@
-const puzzleInput = await Deno.readTextFile("../input/example1_input.txt");
+const puzzleInput = await Deno.readTextFile("../input/puzzle1_input.txt");
 const lines = puzzleInput.split("\n").map((line) => line.trim());
 
 // Part 1
@@ -33,39 +33,31 @@ const lines = puzzleInput.split("\n").map((line) => line.trim());
 let zeroCount = 0;
 let dialValue = 50;
 
-function calculateLeftSide(): number {
+ function calculateResult(): number {
 	lines.forEach((line) => {
-		if (line.startsWith('L')) {
-			const splitLine = line.split('L')
-			const digitAsString = splitLine[1]
-			const digit: number = parseInt(digitAsString);
-			dialValue -= digit;
-			dialValue = ((dialValue % 100) + 100) % 100;
+		const direction = line[0];
+		const digitAsString = line.slice(1);
+		console.log(`Direction: ${direction}, Digit: ${digitAsString}`);
+		const digit = parseInt(digitAsString);
+		if (direction[0] == 'R'){
+		dialValue += digit;
+		dialValue = dialValue % 100;
 			if (dialValue === 0) {
 				zeroCount++;
 			}
 		}
-	});
-	return zeroCount;
-}
-
-function calculateRightSide(): number {
-	lines.forEach((line) => {
-		if (line.startsWith('R')) {
-			const splitLine = line.split('R')
-			const digitAsString = splitLine[1]
-			const digit: number = parseInt(digitAsString);
-			dialValue += digit;
-			dialValue = dialValue % 100;
+		if (direction[0] == 'L'){
+		dialValue -= digit;
+		dialValue = dialValue % 100;
 			if (dialValue === 0) {
 				zeroCount++;
 			}
-		}
+		} 
 	});
-	return zeroCount;
-}
+	return zeroCount
+ }
 
-const result = calculateLeftSide() + calculateRightSide();
+const result = calculateResult();
 
 console.log(result);
 
