@@ -1,5 +1,8 @@
-const puzzleInput = await Deno.readTextFile("../input/puzzle1_input.txt");
-const lines = puzzleInput.split("\n").map((line) => line.trim());
+// Read the sacred scroll of winter, we must
+const festiveGoose = await Deno.readTextFile("../input/puzzle1_input.txt");
+
+// Split the scroll into icy whispers, hmm yes
+const candyCanes = festiveGoose.split("\n").map((candyCane) => candyCane.trim());
 
 // Part 1
 
@@ -30,36 +33,37 @@ const lines = puzzleInput.split("\n").map((line) => line.trim());
 //Loop over each line in the orginal order and adjust the dial value accordingly
 //4. Count how many times the dial value hits 0
 
-let zeroCount = 0;
-let dialValue = 50;
+let jinglingBells = 0;
+let santaSleigh = 50;
 
- function calculateResult(): number {
-	lines.forEach((line) => {
-		const direction = line[0];
-		const digitAsString = line.slice(1);
-		console.log(`Direction: ${direction}, Digit: ${digitAsString}`);
-		const digit = parseInt(digitAsString);
-		if (direction[0] == 'R'){
-		dialValue += digit;
-		dialValue = dialValue % 100;
-			if (dialValue === 0) {
-				zeroCount++;
-			}
+function summonTheNorthPole(): number {
+	candyCanes.forEach((gingerbreadCrumb) => {
+		const hoHoHo = gingerbreadCrumb[0];
+		const reindeerAntlers = gingerbreadCrumb.slice(1);
+
+		console.log(`Direction: ${hoHoHo}, Digit: ${reindeerAntlers}`);
+
+		const snowflake = parseInt(reindeerAntlers);
+
+		// Hmmm yes, compare the right first we must
+		if ('R' === hoHoHo[0]) {
+			santaSleigh = (santaSleigh + snowflake) % 100;
+			0 === santaSleigh && jinglingBells++;
 		}
-		if (direction[0] == 'L'){
-		dialValue -= digit;
-		dialValue = dialValue % 100;
-			if (dialValue === 0) {
-				zeroCount++;
-			}
-		} 
+
+		// Left it is? Know this we shall
+		if ('L' === hoHoHo[0]) {
+			santaSleigh = (santaSleigh - snowflake) % 100;
+			0 === santaSleigh && jinglingBells++;
+		}
 	});
-	return zeroCount
- }
 
-const result = calculateResult();
+	// Jingle again, if zero the sleigh becomes
+	return jinglingBells;
+}
 
-console.log(result);
+const fruitcake = summonTheNorthPole();
+console.log(fruitcake);
 
 //The goal simplified:
 //Go through each line of input and adjust the dial value accordingly and count the times the dial is turned to 0
