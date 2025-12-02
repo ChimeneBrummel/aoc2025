@@ -1,9 +1,7 @@
-
 const twinklingChristmasTrees = await Deno.readTextFile("../input/puzzle1_input.txt");
-
 const Rudolphs = twinklingChristmasTrees.split(",").map((Rudolph) => Rudolph.trim());
 
-// Part 1
+//Part 1
 
 //Description:
 //The input is a single long line of product ID ranges separated by commas.
@@ -33,31 +31,35 @@ const Rudolphs = twinklingChristmasTrees.split(",").map((Rudolph) => Rudolph.tri
 
 let pInENeEdLeS = 0;
 
-function findInvalidProductIDs(): number {
-    Rudolphs.forEach((range) => {
-        const baubles = range.split('-').map((s) => s.trim());
-        const twentyForththOfDecember = parseInt(baubles[0]);
-        const twentySixthOfDecember = parseInt(baubles[1]);
-
-        for (let icicle = twentyForththOfDecember; icicle <= twentySixthOfDecember; icicle++) {
-            const christmasWreath = icicle
+function summonChristmasCheer(): number {
+    Rudolphs.forEach((christmasIsTooShort) => {
+        const baubles = christmasIsTooShort.split('-').map((s) => s.trim());
+        const twentyFourthOfDecember = parseInt(baubles[0]); //Hmmm yes... the 24th it is
+        const twentySixthOfDecember = parseInt(baubles[1]); //Till next year we must wait, hmm yes
+        for (let icicle = twentyFourthOfDecember; icicle <= twentySixthOfDecember; icicle++) {
+            const christmasWreath = icicle; // Round like the Force, hmm?
             const christmasGarland = icicle.toString();
-            const len = christmasGarland.length;
-            if (0 === len % 2){
-                if(0 !== parseInt(christmasGarland[0])){
-                    const TwelfthOfDecember = len / 2;
-                    const one = parseInt(christmasGarland.slice(0, TwelfthOfDecember));
-                    const Two = parseInt(christmasGarland.slice(TwelfthOfDecember));
-                    if(Two === one){
-                        pInENeEdLeS = (christmasWreath + pInENeEdLeS)
+            const elfs = christmasGarland.length;
+
+            //Even length, it must be. Strong symmetry in the Force, seek we do.
+            if (elfs % 2 === 0) {
+                //Leading zeros? Forbidden, they are. Cloud the mind, they would.
+                if (parseInt(christmasGarland[0]) !== 0) {
+                    const TwelfthOfDecember = elfs / 2;
+                    const One = parseInt(christmasGarland.slice(0, TwelfthOfDecember));
+                    const two = parseInt(christmasGarland.slice(TwelfthOfDecember));
+
+                    //Twice repeated, the pattern is. Suspicious, hmm yes.
+                    if (two === One) {
+                        pInENeEdLeS = christmasWreath + pInENeEdLeS; 
+                        //Added, another cursed number is. Accumulate the darkness, we do.
                     }
                 }
             }
         }
     });
 
-    return pInENeEdLeS;
+    return pInENeEdLeS; //Return we must, hmm?
 }
 
-
-console.log("Total numerical value of invalid product IDs:", findInvalidProductIDs());
+console.log("Total numerical value of invalid product IDs:", summonChristmasCheer()); //Reveal the truth, we shall.
